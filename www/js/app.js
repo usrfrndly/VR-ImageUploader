@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+angular.module('starter', ['ionic', 'ngCordova'])
 
 // .run(function($ionicPlatform) {
 //   $ionicPlatform.ready(function() {
@@ -22,3 +22,38 @@ angular.module('starter', ['ionic'])
 //     }
 //   });
 // })
+
+.controller('ThisCtrl', doGetGalleryPhoto);
+
+//   var options = {
+//    maximumImagesCount: 10,
+//    width: 800,
+//    height: 800,
+//    quality: 80
+//   };
+
+//   $cordovaImagePicker.getPictures(options)
+//     .then(function (results) {
+//       for (var i = 0; i < results.length; i++) {
+//         console.log('Image URI: ' + results[i]);
+//       }
+//     }, function(error) {
+//       // error getting photos
+//     });
+// });
+
+/**
+ * displays the photo gallery for the user to select an image to
+ * work with
+ */
+function doGetGalleryPhoto() {
+    CameraService.getPicturesFromGallery().then(function (imageURI) {
+        console.log(imageURI);
+        vm.lastPhoto = imageURI;
+        vm.newPhoto = true;
+    }, function (err) {
+        console.log(err);
+        vm.newPhoto = false;
+        alert("Buddy Connector", "Error Getting Photo " + err);
+    });
+}
