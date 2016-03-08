@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['ionic'])
 
 .factory('Camera', ['$q', function($q) {
  
@@ -16,4 +16,19 @@ angular.module('starter.services', [])
       return q.promise;
     }
   }
+}])
+
+ .service('MyStateManager', ['$state', '$stateParams', '$rootScope', function($state, $stateParams, $rootScope)
+{
+    this.go = function(state, params, options)
+    {
+        var destroyListener = $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams)
+        {
+            ionic.extend(true, toParams, params);
+            destroyListener();
+        });
+
+        return $state.go(state, params, options);
+    };
 }]);
+
