@@ -12,13 +12,29 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.services', 'starter.co
                 controller: 'ThisCtrl',
                 templateUrl: 'index.html'
             })
-            .state('vr_mode', {
-                url: '/vr_mode',
+            .state('which_mode', {
+                url: '/which_mode',
                 params: {
                     dataUrl: ""
                 },
+                controller: 'WhichCntl',
+                templateUrl: 'templates/which_mode.html',
+            })
+            .state('vr_mode', {
+                url: '/vr_mode',
+                params: {
+                    lastPhoto: ""
+                },
                 controller: 'VrCntl',
                 templateUrl: 'templates/vr_mode.html',
+            })
+            .state('handheld_mode', {
+                url: 'handheld_mode',
+                params: {
+                    lastPhoto: ""
+                },
+                controller: 'HandheldCntl',
+                templateUrl: 'templates/handheld_mode.html',
 
             })
     })
@@ -51,7 +67,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.services', 'starter.co
 
 
     .controller('ThisCtrl', function($scope, Camera, $state, MyStateManager) {
-
+        
         $scope.doGetGalleryPhoto = function() {
             //     navigator.camera.getPicture().then(function(imageURI) {
             //       console.log(imageURI);
@@ -71,8 +87,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.services', 'starter.co
                 console.log(imageURI);
                 var image = document.getElementById('myThing');
                 $scope.lastPhoto = imageURI;
-                debugger;
-                MyStateManager.go('vr_mode', { dataUrl: imageURI });
+               // MyStateManager.go('vr_mode', { dataUrl: imageURI });
+               MyStateManager.go('which_mode', { dataUrl: imageURI });
                 console.log(MyStateManager);
 
                 // debugger;
@@ -84,6 +100,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.services', 'starter.co
                     encodingType: navigator.camera.EncodingType.JPEG,
                     saveToPhotoAlbum: false
                 });
+                        // $scope.$on('$ionicView.enter', function () {
+                        //     $scope.doGetGalleryPhoto();
+                        // });
+
 
 
 
